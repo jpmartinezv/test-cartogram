@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="mapa"></div>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="//unpkg.com/cartogram-chart"></script>
+    <script>
+        d3.json('cuencas_uruguay_UH.topojson', (error, peru) => {
+            if (error) throw error;
+
+            var center = [-56.156410, -32.661547];
+
+            var scale = 1600;
+            var height = 500;
+            var width = 500;
+
+            var projection = d3.geoMercator()
+                .scale(scale)
+                .center(center)
+                .translate([width / 2, height / 2]);
+
+            var cartogram = Cartogram()
+                .topoJson(peru)
+                .projection(projection)
+                .topoObjectName('cuencas_uy_n1')
+                .value(function (d) {
+                    return d.properties.area;
+                })
+                .label(function (d) {
+                    return d.properties.NOMBRE;
+                })
+                (document.getElementById('mapa'));
+
+            setTimeout(function () {
+                cartogram.value(function (d) {
+                    return Math.random() * 1000;
+                });
+            }, 3000);
+        });
+    </script>
+</body>
+
+</html>
