@@ -14,7 +14,7 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="//unpkg.com/cartogram-chart"></script>
     <script>
-        d3.json('cuencas_uruguay_UH.topojson', (error, peru) => {
+        d3.json('cuencas_uruguay_UH.topojson', (error, data) => {
             if (error) throw error;
 
             var center = [-56.156410, -32.661547];
@@ -29,7 +29,7 @@
                 .translate([width / 2, height / 2]);
 
             var cartogram = Cartogram()
-                .topoJson(peru)
+                .topoJson(data)
                 .projection(projection)
                 .topoObjectName('cuencas_uy_n1')
                 .value(function (d) {
